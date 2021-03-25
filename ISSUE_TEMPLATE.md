@@ -12,32 +12,35 @@ Make sure you have provided the following information:
 
 
 ###### What organization or people are asking to have this signed:
-`[your text here]`
+Microsoft Corporation
 
 ###### What product or service is this for:
-`[your text here]`
+CBL-Mariner
 
 ###### Please create your shim binaries starting with the 15.4 shim release tar file:
 ###### https://github.com/rhboot/shim/releases/download/15.4/shim-15.4.tar.bz2
 ###### This matches https://github.com/rhboot/shim/releases/tag/15.4 and contains
 ###### the appropriate gnu-efi source.
 ###### Please confirm this as the origin your shim.
-`[your text here]`
+Confirmed. We are building from the shim-15.4 tar file.
 
 ###### What's the justification that this really does need to be signed for the whole world to be able to boot it:
-`[your text here]`
+CBL-Mariner is an Linux distribution, built to run first party Azure cloud and edge workloads.
 
 ###### How do you manage and protect the keys used in your SHIM?
-`[your text here]`
+We use a hardware HSM
 
 ###### Do you use EV certificates as embedded certificates in the SHIM?
-`[your text here]`
+No
 
 ###### If you use new vendor_db functionality, are any hashes allow-listed, and if yes: for what binaries ?
-`[your text here]`
+No
 
 ###### Is kernel upstream commit 75b0cea7bf307f362057cc778efe89af4c615354 present in your kernel, if you boot chain includes a Linux kernel ?
-`[your text here]`
+Yes, these commits are present in our linux kernel. We are baselined on 5.10 LTS stable tree.
+Source tree here: https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner/5.10.78.1
+- https://github.com/microsoft/CBL-Mariner-Linux-Kernel/commit/824d0b6225f3fa2992704478a8df520537cfcb56
+- https://github.com/microsoft/CBL-Mariner-Linux-Kernel/commit/1957a85b0032a81e6482ca4aab883643b8dae06e
 
 ###### if SHIM is loading GRUB2 bootloader, are CVEs CVE-2020-14372,
 ###### CVE-2020-25632, CVE-2020-25647, CVE-2020-27749, CVE-2020-27779,
@@ -46,39 +49,60 @@ Make sure you have provided the following information:
 ###### ( July 2020 grub2 CVE list + March 2021 grub2 CVE list )
 ###### and if you are shipping the shim_lock module CVE-2021-3418
 ###### fixed ?
-`[your text here]`
+Yes. Our GRUB2 is baselined on 2.06-rc1 which has these fixes.
 
 ###### "Please specifically confirm that you add a vendor specific SBAT entry for SBAT header in each binary that supports SBAT metadata
 ###### ( grub2, fwupd, fwupdate, shim + all child shim binaries )" to shim review doc ?
+Confirmed
 ###### Please provide exact SBAT entries for all SBAT binaries you are booting or planning to boot directly through shim
+SHIM SBAT entry:
+```
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,1,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.mariner,1,Microsoft,shim,15.4-2.cm1,https://github.com/microsoft/CBL-Mariner
+```
+GRUB2 SBAT entry:
+```
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+grub,1,Free Software Foundation,grub,2.06~rc1,https://www.gnu.org/software/grub/
+grub.mariner,1,Microsoft,grub2,2.06~rc1-5.cm1,https://github.com/microsoft/CBL-Mariner
+```
+We do not currently support fwupd or fwupdate.
+
 ###### Where your code is only slightly modified from an upstream vendor's, please also preserve their SBAT entries to simplify revocation
-`[your text here]`
+N/A.
 
 ##### Were your old SHIM hashes provided to Microsoft ?
-`[your text here]`
+N/A. Our only Previous shim did not trust booting any vulnerable GRUB2s affected by the listed CVEs.
 
 ##### Did you change your certificate strategy, so that affected by CVE-2020-14372, CVE-2020-25632, CVE-2020-25647, CVE-2020-27749,
 ##### CVE-2020-27779, CVE-2021-20225, CVE-2021-20233, CVE-2020-10713,
 ##### CVE-2020-14308, CVE-2020-14309, CVE-2020-14310, CVE-2020-14311, CVE-2020-15705 ( July 2020 grub2 CVE list + March 2021 grub2 CVE list )
 ##### grub2 bootloaders can not be verified ?
-`[your text here]`
+Previously we did. We made a new signing key for grub2. We did not sign any grub2 builds affected by these CVEs with this new key. Our signed grub2 builds have the CVE fixes.
 
 ##### What exact implementation of Secureboot in grub2 ( if this is your bootloader ) you have ?
 ##### * Upstream grub2 shim_lock verifier or * Downstream RHEL/Fedora/Debian/Canonical like implementation ?
-`[your text here]`
+GRUB2 2.06-rc1 + Secure Boot patches from Fedora 34.
 
 ##### Which modules are built into your signed grub image?
-`[your text here]`
+We build in the following modules:
+`x86_64-efi fat iso9660 part_gpt part_msdos normal boot linux configfile loopback chain efifwsetup efi_gop efi_uga ls search search_label search_fs_uuid search_fs_file gfxterm gfxterm_background gfxterm_menu test all_video loadenv exfat ext2 udf halt gfxmenu png tga lsefi help probe echo lvm cryptodisk luks gcry_rijndael gcry_sha512 tpm
+`
 
 ###### What is the origin and full version number of your bootloader (GRUB or other)?
-`[your text here]`
+Baseline is Grub 2.06-rc1 + Secure Boot patches from Fedora 34 + a few extra patches from Fedora 34
+
+Our latest Grub2 spec and patches can be found here: https://github.com/microsoft/CBL-Mariner/tree/1.0/SPECS/grub2
+
+The current grub2 source RPM is also provided in this repository: [grub2-2.06~rc1-5.cm1.src.rpm](grub2-2.06~rc1-5.cm1.src.rpm)
 
 ###### If your SHIM launches any other components, please provide further details on what is launched
-`[your text here]`
+No other components launched by our shim.
 
 ###### If your GRUB2 launches any other binaries that are not Linux kernel in SecureBoot mode,
 ###### please provide further details on what is launched and how it enforces Secureboot lockdown
-`[your text here]`
+N/A - we only launch the Linux kernel
 
 ###### If you are re-using a previously used (CA) certificate, you
 ###### will need to add the hashes of the previous GRUB2 binaries
@@ -86,19 +110,29 @@ Make sure you have provided the following information:
 ###### GRUB2 from being able to chainload those older GRUB2 binaries. If
 ###### you are changing to a new (CA) certificate, this does not
 ###### apply. Please describe your strategy.
-`[your text here]`
+N/A. We changed to a new certificate.
 
 ###### How do the launched components prevent execution of unauthenticated code?
-`[your text here]`
+Grub2 has secure boot patches which will only load signed binaries.
+All modules used are built into GRUB2 binary.
 
 ###### Does your SHIM load any loaders that support loading unsigned kernels (e.g. GRUB)?
-`[your text here]`
+No
 
 ###### What kernel are you using? Which patches does it includes to enforce Secure Boot?
-`[your text here]`
+We use the CBL-Mariner Linux Kernel, which is based on the 5.10 LTS kernel.
+Current source tree here: https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner/5.10.78.1
 
 ###### What changes were made since your SHIM was last signed?
-`[your text here]`
-
+Changes since previous submission:
+- Added 6 upstream patches to shim-15.4 to address critical issues:
+    - https://github.com/rhboot/shim/pull/364
+    - https://github.com/rhboot/shim/commit/822d07ad4f07ef66fe447a130e1027c88d02a394
+    - https://github.com/rhboot/shim/pull/357
+    - https://github.com/rhboot/shim/pull/372
+    - https://github.com/rhboot/shim/pull/379
+    - https://github.com/rhboot/shim/pull/361
+    
+- Code signing cert has been updated with an updated version. New cert expires on 2022/10/13
 ###### What is the SHA256 hash of your final SHIM binary?
-`[your text here]`
+fb83a52ebab42540d43d59fada0a4d9fe929a2a9b749f7cad89a7607124c04e0  shimx64.efi
