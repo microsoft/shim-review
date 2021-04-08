@@ -1,31 +1,31 @@
-Sending build context to Docker daemon  285.2MB
+Sending build context to Docker daemon    348MB
 Step 1/18 : FROM cbl-mariner-1.0:latest
- ---> 74b4160cd39d
+ ---> 627a7c34abf8
 Step 2/18 : RUN tdnf install -y rpm-build gcc make glibc-devel binutils cpio patch diffutils dos2unix vim-extra
- ---> Running in 5ed7777aa31b
+ ---> Running in 710d5a069980
 Loaded plugin: tdnfrepogpgcheck
-Refreshing metadata for: 'CBL-Mariner Official Base 1.0 x86_64'
 Refreshing metadata for: 'CBL-Mariner Official Update 1.0 x86_64'
+Refreshing metadata for: 'CBL-Mariner Official Base 1.0 x86_64'
 
 Installing:
-unzip                    x86_64       6.0-18.cm1       mariner-official-update 270.30k 276783
 tcsh                     x86_64       6.20.00-9.cm1    mariner-official-update   1.04M 1095267
 gawk                     x86_64       4.2.1-4.cm1      mariner-official-update   2.22M 2329214
-elfutils-libelf-devel    x86_64       0.176-4.cm1      mariner-official-update  32.97k 33760
+unzip                    x86_64       6.0-18.cm1       mariner-official-update 270.30k 276783
 zlib-devel               x86_64       1.2.11-3.cm1     mariner-official-base 236.92k 242608
 xz-devel                 x86_64       5.2.4-3.cm1      mariner-official-base 327.81k 335676
+elfutils-libelf-devel    x86_64       0.176-4.cm1      mariner-official-update  32.97k 33760
 elfutils-devel           x86_64       0.176-4.cm1      mariner-official-update 308.05k 315440
 zstd                     x86_64       1.4.4-1.cm1      mariner-official-base 809.29k 828708
 libgomp                  x86_64       9.1.0-7.cm1      mariner-official-update 223.62k 228984
 zstd-devel               x86_64       1.4.4-1.cm1      mariner-official-base 138.03k 141346
 file-libs                x86_64       5.38-1.cm1       mariner-official-base   5.70M 5976056
 perl                     x86_64       5.30.3-1.cm1     mariner-official-base  55.69M 58396654
+mpfr                     x86_64       4.0.1-3.cm1      mariner-official-base 548.43k 561595
+libmpc                   x86_64       1.1.0-5.cm1      mariner-official-base 385.48k 394735
 libstdc++-devel          x86_64       9.1.0-7.cm1      mariner-official-update  16.27M 17055323
 libgomp-devel            x86_64       9.1.0-7.cm1      mariner-official-update 402.36k 412015
 libgcc-devel             x86_64       9.1.0-7.cm1      mariner-official-update 127.88k 130950
 libgcc-atomic            x86_64       9.1.0-7.cm1      mariner-official-update  34.15k 34968
-mpfr                     x86_64       4.0.1-3.cm1      mariner-official-base 548.43k 561595
-libmpc                   x86_64       1.1.0-5.cm1      mariner-official-base 385.48k 394735
 rpm-devel                x86_64       4.14.2-10.cm1    mariner-official-base 285.50k 292351
 rpm-build-libs           x86_64       4.14.2-10.cm1    mariner-official-base 182.34k 186720
 vim-extra                x86_64       8.1.1667-1.cm1   mariner-official-update  28.77M 30162739
@@ -89,14 +89,14 @@ Installing/Updating: libgomp-devel-9.1.0-7.cm1.x86_64
 Installing/Updating: zstd-1.4.4-1.cm1.x86_64
 Installing/Updating: zstd-devel-1.4.4-1.cm1.x86_64
 Installing/Updating: rpm-devel-4.14.2-10.cm1.x86_64
+Installing/Updating: elfutils-libelf-devel-0.176-4.cm1.x86_64
 Installing/Updating: xz-devel-5.2.4-3.cm1.x86_64
 Installing/Updating: zlib-devel-1.2.11-3.cm1.x86_64
-Installing/Updating: elfutils-libelf-devel-0.176-4.cm1.x86_64
 Installing/Updating: elfutils-devel-0.176-4.cm1.x86_64
-Installing/Updating: tcsh-6.20.00-9.cm1.x86_64
 Installing/Updating: unzip-6.0-18.cm1.x86_64
-Installing/Updating: rpm-build-4.14.2-10.cm1.x86_64
+Installing/Updating: tcsh-6.20.00-9.cm1.x86_64
 Installing/Updating: vim-extra-8.1.1667-1.cm1.x86_64
+Installing/Updating: rpm-build-4.14.2-10.cm1.x86_64
 Installing/Updating: gcc-9.1.0-7.cm1.x86_64
 Installing/Updating: make-4.2.1-5.cm1.x86_64
 Installing/Updating: glibc-devel-2.28-17.cm1.x86_64
@@ -106,40 +106,40 @@ Installing/Updating: diffutils-3.6-4.cm1.x86_64
 Installing/Updating: dos2unix-7.4.1-4.cm1.x86_64
 
 Complete!
-Removing intermediate container 5ed7777aa31b
- ---> 20a295a410a2
+Removing intermediate container 710d5a069980
+ ---> d01b6458f52f
 Step 3/18 : COPY shim-unsigned-x64-15.4-1.cm1.src.rpm /root/shim-unsigned-x64-15.4-1.cm1.src.rpm
- ---> bc90c01667cf
+ ---> 8174ed017497
 Step 4/18 : COPY shimx64.efi /
- ---> f918789d7565
+ ---> b9a698d04079
 Step 5/18 : COPY shim-15.4.tar.bz2 /
- ---> c9b9e8af6885
+ ---> 225683e4fdf2
 Step 6/18 : RUN sha256sum /root/shim-unsigned-x64-15.4-1.cm1.src.rpm
- ---> Running in 461497ca3b76
+ ---> Running in 50ec2dad9580
 c51ec973d5639fd96ade396342acff400a064af2f4765ad41e46297c4e8cbdf3  /root/shim-unsigned-x64-15.4-1.cm1.src.rpm
-Removing intermediate container 461497ca3b76
- ---> ff0b32a93f60
+Removing intermediate container 50ec2dad9580
+ ---> 47a76c0d67ef
 Step 7/18 : RUN rpm -ihv /root/shim-unsigned-x64-15.4-1.cm1.src.rpm
- ---> Running in d9f10ee8e283
+ ---> Running in 552cff6928a8
 Updating / installing...
 shim-unsigned-x64-15.4-1.cm1          ########################################
 [91mwarning: user chrco does not exist - using root
 [0m[91mwarning: group chrco does not exist - using root
-[0mRemoving intermediate container d9f10ee8e283
- ---> ce7590645a2a
+[0mRemoving intermediate container 552cff6928a8
+ ---> a7a47a98cf76
 Step 8/18 : RUN sha256sum /usr/src/mariner/SOURCES/shim-15.4.tar.bz2
- ---> Running in eefdee26f957
+ ---> Running in c88493b18621
 8344473dd10569588b8238a4656b8fab226714eea9f5363f8c410aa8a5090297  /usr/src/mariner/SOURCES/shim-15.4.tar.bz2
-Removing intermediate container eefdee26f957
- ---> e14191fcc080
+Removing intermediate container c88493b18621
+ ---> a57261576cef
 Step 9/18 : RUN sha256sum /shim-15.4.tar.bz2
- ---> Running in 364173622bbb
+ ---> Running in b57a2e7c51fa
 8344473dd10569588b8238a4656b8fab226714eea9f5363f8c410aa8a5090297  /shim-15.4.tar.bz2
-Removing intermediate container 364173622bbb
- ---> bd48fecd5c85
+Removing intermediate container b57a2e7c51fa
+ ---> ecd962cacc21
 Step 10/18 : RUN rpmbuild -bb /usr/src/mariner/SPECS/shim-unsigned-x64.spec --define "dist .cm1" 2>&1 | tee /build.log
- ---> Running in 03bb3e22817c
-Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.cobfhE
+ ---> Running in db5b7c25c220
+Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.BDMU0U
 + umask 022
 + cd /usr/src/mariner/BUILD
 + cd /usr/src/mariner/BUILD
@@ -154,7 +154,7 @@ Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.cobfhE
 + cat ./data/sbat.microsoft.csv
 shim.mariner,1,Microsoft,shim,15.4-1.cm1,https://github.com/microsoft/CBL-Mariner
 + exit 0
-Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.huRNM8
+Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.YrrWau
 + umask 022
 + cd /usr/src/mariner/BUILD
 + CFLAGS='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -specs=/usr/lib/rpm/mariner/default-hardened-cc1  -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection'
@@ -752,9 +752,9 @@ objcopy -D -j .text -j .sdata -j .data -j .data.ident \
 dd conv=notrunc bs=1 count=4 seek=136 if=/dev/zero of=shimx64.efi
 4+0 records in
 4+0 records out
-4 bytes copied, 2.6995e-05 s, 148 kB/s
+4 bytes copied, 2.3574e-05 s, 170 kB/s
 + exit 0
-Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.YSRtwk
+Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.v0aZMI
 + umask 022
 + cd /usr/src/mariner/BUILD
 + cd shim-15.4
@@ -774,7 +774,7 @@ find: 'file': No such file or directory
 find: 'file': No such file or directory
 + /usr/lib/rpm/brp-strip-static-archive /usr/bin/strip
 find: 'file': No such file or directory
-Executing(%check): /bin/sh -e /var/tmp/rpm-tmp.5bL2jw
+Executing(%check): /bin/sh -e /var/tmp/rpm-tmp.cT8wsX
 + umask 022
 + cd /usr/src/mariner/BUILD
 + cd shim-15.4
@@ -783,7 +783,7 @@ make[1]: Entering directory '/usr/src/mariner/BUILD/shim-15.4'
 dd if=/dev/urandom bs=512 count=17 of=random.bin
 17+0 records in
 17+0 records out
-8704 bytes (8.7 kB, 8.5 KiB) copied, 0.00034561 s, 25.2 MB/s
+8704 bytes (8.7 kB, 8.5 KiB) copied, 0.000319302 s, 27.3 MB/s
 xxd -i random.bin test-random.h
 gcc -O2 -ggdb -std=gnu11 -isystem /usr/src/mariner/BUILD/shim-15.4/include/system -I/usr/src/mariner/BUILD/shim-15.4/gnu-efi/inc -I/usr/src/mariner/BUILD/shim-15.4/gnu-efi/inc/x86_64 -I/usr/src/mariner/BUILD/shim-15.4/gnu-efi/inc/protocol -Iinclude -iquote . -fshort-wchar -flto -fno-builtin -Wall -Wextra -Wsign-compare -Wno-deprecated-declarations -Wno-pointer-sign -Wno-unused -Werror -Werror=nonnull -Werror=nonnull-compare  -DEFI_FUNCTION_WRAPPER -DGNU_EFI_USE_MS_ABI -DPAGE_SIZE=4096 -DSHIM_UNIT_TEST "-DDEFAULT_DEBUG_PRINT_STATE=0" -o test-str test.c test-str.c  lib/string.c
 ./test-str
@@ -899,15 +899,15 @@ test_csv_2: passed
 running test_simple_sbat_csv
 test_simple_sbat_csv: passed
 running test_csv_simple_fuzz
-parsed 126 entries
+parsed 118 entries
 test_csv_simple_fuzz: passed
 running test_csv_simple_fuzz
-parsed 4 entries
+parsed 3 entries
 test_csv_simple_fuzz: passed
 make[1]: Leaving directory '/usr/src/mariner/BUILD/shim-15.4'
 + exit 0
 Processing files: shim-unsigned-x64-15.4-1.cm1.x86_64
-Executing(%license): /bin/sh -e /var/tmp/rpm-tmp.eULHoP
+Executing(%license): /bin/sh -e /var/tmp/rpm-tmp.nkt5kj
 + umask 022
 + cd /usr/src/mariner/BUILD
 + cd shim-15.4
@@ -922,53 +922,53 @@ Provides: shim-unsigned-x64 = 15.4-1.cm1 shim-unsigned-x64(x86-64) = 15.4-1.cm1
 Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
 Checking for unpackaged file(s): /usr/lib/rpm/check-files /usr/src/mariner/BUILDROOT/shim-unsigned-x64-15.4-1.cm1.x86_64
 Wrote: /usr/src/mariner/RPMS/x86_64/shim-unsigned-x64-15.4-1.cm1.x86_64.rpm
-Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.B6PyV8
+Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.O8nIFF
 + umask 022
 + cd /usr/src/mariner/BUILD
 + cd shim-15.4
 + /usr/bin/rm -rf /usr/src/mariner/BUILDROOT/shim-unsigned-x64-15.4-1.cm1.x86_64
 + exit 0
-Removing intermediate container 03bb3e22817c
- ---> 0c29cb660fd2
+Removing intermediate container db5b7c25c220
+ ---> 7c44c3b1394c
 Step 11/18 : RUN rpm -qlp /usr/src/mariner/RPMS/x86_64/shim-unsigned-x64-15.4-1.cm1.x86_64.rpm
- ---> Running in 7db38509704e
+ ---> Running in fb2be95951c1
 /usr/share/licenses/shim-unsigned-x64-15.4
 /usr/share/licenses/shim-unsigned-x64-15.4/COPYRIGHT
 /usr/share/shim-unsigned-x64/shimx64.efi
-Removing intermediate container 7db38509704e
- ---> 9fd70450262c
+Removing intermediate container fb2be95951c1
+ ---> 97a9f3967f92
 Step 12/18 : RUN rpm2cpio /usr/src/mariner/RPMS/x86_64/shim-unsigned-x64-15.4-1.cm1.x86_64.rpm | cpio -idmv
- ---> Running in 0262b064fdc5
+ ---> Running in 2d9d9af5a466
 [91m./usr/share/licenses/shim-unsigned-x64-15.4
 [0m[91m./usr/share/licenses/shim-unsigned-x64-15.4/COPYRIGHT
 [0m[91m./usr/share/shim-unsigned-x64/shimx64.efi
 1793 blocks
-[0mRemoving intermediate container 0262b064fdc5
- ---> 0ebca0630f9e
+[0mRemoving intermediate container 2d9d9af5a466
+ ---> a1d071d0e903
 Step 13/18 : RUN sha256sum /usr/share/shim-unsigned-x64/shimx64.efi
- ---> Running in 30b64a373b8d
+ ---> Running in 6cca81f30bdb
 4930a1506341f7a37f4f22dd284d90e64bb4fb99ca8ee634b10ee52951e3604f  /usr/share/shim-unsigned-x64/shimx64.efi
-Removing intermediate container 30b64a373b8d
- ---> 70e61b6ee847
+Removing intermediate container 6cca81f30bdb
+ ---> bc028d6123c5
 Step 14/18 : RUN sha256sum /shimx64.efi
- ---> Running in 28fc8408662e
+ ---> Running in 7462e4cd86e6
 4930a1506341f7a37f4f22dd284d90e64bb4fb99ca8ee634b10ee52951e3604f  /shimx64.efi
-Removing intermediate container 28fc8408662e
- ---> d5eed2c167c5
+Removing intermediate container 7462e4cd86e6
+ ---> 9fb417c3b620
 Step 15/18 : RUN hexdump -Cv /usr/share/shim-unsigned-x64/shimx64.efi > /built.hex
- ---> Running in 4fba64d8e82c
-Removing intermediate container 4fba64d8e82c
- ---> ee95824f4dd0
+ ---> Running in c5df9cacfd98
+Removing intermediate container c5df9cacfd98
+ ---> 6e3801b791f9
 Step 16/18 : RUN hexdump -Cv /shimx64.efi > /orig.hex
- ---> Running in 95ed8798f7f4
-Removing intermediate container 95ed8798f7f4
- ---> 430c3f86313b
+ ---> Running in 31b14d4629e5
+Removing intermediate container 31b14d4629e5
+ ---> 4aadba6b2daf
 Step 17/18 : RUN diff -u /orig.hex /built.hex || true
- ---> Running in 40a0e4fe0f1c
-Removing intermediate container 40a0e4fe0f1c
- ---> 24e0d689e788
+ ---> Running in 4dde86dd8847
+Removing intermediate container 4dde86dd8847
+ ---> 501aacb7c67d
 Step 18/18 : RUN objdump -s -j .sbat shimx64.efi
- ---> Running in f7b4e8e7359f
+ ---> Running in 0e7337c9185a
 
 shimx64.efi:     file format pei-x86-64
 
@@ -987,7 +987,7 @@ Contents of section .sbat:
  cb0b0 733a2f2f 67697468 75622e63 6f6d2f6d  s://github.com/m
  cb0c0 6963726f 736f6674 2f43424c 2d4d6172  icrosoft/CBL-Mar
  cb0d0 696e6572 0a                          iner.           
-Removing intermediate container f7b4e8e7359f
- ---> e5a2096d6825
-Successfully built e5a2096d6825
+Removing intermediate container 0e7337c9185a
+ ---> 9fa89eb15fbf
+Successfully built 9fa89eb15fbf
 Successfully tagged cbl-mariner-1.0-shim-review:latest
