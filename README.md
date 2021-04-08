@@ -139,12 +139,12 @@ What OS and toolchain must we use to reproduce this build?  Include where to fin
 If possible, provide a Dockerfile that rebuilds the shim.
 -------------------------------------------------------------------------------
 Build is done in a CBL-Mariner build environment. Build can be replicated with
-the provided docker base image ([core-1.0.20210224.tar.gz](core-1.0.20210224.tar.gz))
+the provided docker base image ([core-1.0.20210408.0251.tar.gz](core-1.0.20210408.0251.tar.gz))
 and shim source rpm ([shim-unsigned-x64-15.4-1.cm1.src.rpm](shim-unsigned-x64-15.4-1.cm1.src.rpm))
 
 Relevant sha256 hashes:
 ```
-d18d126e1bafd11a5b83b647fb19cad98b122dcc8002bbf85bb7239816a22ef8  core-1.0.20210224.tar.gz
+0db0b5369a3dc266da8abb6782d754033dc1826ff99f959294d411af466df020  core-1.0.20210408.0251.tar.gz
 c51ec973d5639fd96ade396342acff400a064af2f4765ad41e46297c4e8cbdf3  shim-unsigned-x64-15.4-1.cm1.src.rpm
 8344473dd10569588b8238a4656b8fab226714eea9f5363f8c410aa8a5090297  shim-15.4.tar.bz2
 4930a1506341f7a37f4f22dd284d90e64bb4fb99ca8ee634b10ee52951e3604f  shimx64.efi
@@ -155,7 +155,7 @@ A Dockerfile ([Dockerfile](Dockerfile)) is provided to reproduce the entire buil
 using the provided docker base image and source rpm.
 ```
 cd shim-review
-docker import core-1.0.20210224.tar.gz cbl-mariner-1.0
+docker import core-1.0.20210408.0251.tar.gz cbl-mariner-1.0
 docker build -t cbl-mariner-1.0-shim-review .
 ```
 
