@@ -23,22 +23,22 @@ Here's the template:
 *******************************************************************************
 ### What organization or people are asking to have this signed?
 *******************************************************************************
-[your text here]
+Microsoft Corporation
 
 *******************************************************************************
 ### What product or service is this for?
 *******************************************************************************
-[your text here]
+Azure Linux (formerly CBL-Mariner)
 
 *******************************************************************************
 ### What's the justification that this really does need to be signed for the whole world to be able to boot it?
 *******************************************************************************
-[your text here]
+Azure Linux is a Linux distribution, built to run Azure cloud, edge, and other workloads.
 
 *******************************************************************************
 ### Why are you unable to reuse shim from another distro that is already signed?
 *******************************************************************************
-[your text here]
+Azure Linux builds and signs our own kernels and thus cannot use any other shim, which does not contain our kernel signing key.
 
 *******************************************************************************
 ### Who is the primary contact for security updates, etc.?
@@ -47,10 +47,10 @@ The security contacts need to be verified before the shim can be accepted. For s
 An authorized reviewer will initiate contact verification by sending each security contact a PGP-encrypted email containing random words.
 You will be asked to post the contents of these mails in your `shim-review` issue to prove ownership of the email addresses and PGP keys.
 *******************************************************************************
-- Name:
-- Position:
-- Email address:
-- PGP key fingerprint:
+- Name: Dan Streetman
+- Position: Azure Linux Software Engineer
+- Email address: ddstreet@microsoft.com
+- PGP key fingerprint: 92540C4CCA579AD62C8A1F55B79D6F240D5D66C3
 
 (Key should be signed by the other security contacts, pushed to a keyserver
 like keyserver.ubuntu.com, and preferably have signatures that are reasonably
@@ -59,10 +59,10 @@ well known in the Linux community.)
 *******************************************************************************
 ### Who is the secondary contact for security updates, etc.?
 *******************************************************************************
-- Name:
-- Position:
-- Email address:
-- PGP key fingerprint:
+- Name: Chris Co
+- Position: Azure Linux Engineering Team Lead
+- Email address: Christopher.Co@microsoft.com
+- PGP key fingerprint: TBD
 
 (Key should be signed by the other security contacts, pushed to a keyserver
 like keyserver.ubuntu.com, and preferably have signatures that are reasonably
@@ -154,18 +154,20 @@ The entry should look similar to: `grub,4,Free Software Foundation,grub,GRUB_UPS
 ### Is upstream commit [75b0cea7bf307f362057cc778efe89af4c615354 "ACPI: configfs: Disallow loading ACPI tables when locked down"](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=75b0cea7bf307f362057cc778efe89af4c615354) applied?
 ### Is upstream commit [eadb2f47a3ced5c64b23b90fd2a3463f63726066 "lockdown: also lock down previous kgdb use"](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eadb2f47a3ced5c64b23b90fd2a3463f63726066) applied?
 *******************************************************************************
-[your text here]
+Yes, our current kernel is based on 6.6, which includes all those commits.
 
 *******************************************************************************
 ### Do you build your signed kernel with additional local patches? What do they do?
 *******************************************************************************
-[your text here]
+Our kernel is built from: https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/azlinux-6.6.y
+
+We maintain this with regular updates from the upstream stable release as well as intermittent patches that are needed for business reasons, e.g. new driver support.
 
 *******************************************************************************
 ### Do you use an ephemeral key for signing kernel modules?
 ### If not, please describe how you ensure that one kernel build does not load modules built for another kernel.
 *******************************************************************************
-[your text here]
+Yes
 
 *******************************************************************************
 ### If you use vendor_db functionality of providing multiple certificates and/or hashes please briefly describe your certificate setup.
@@ -177,7 +179,7 @@ The entry should look similar to: `grub,4,Free Software Foundation,grub,GRUB_UPS
 ### If you are re-using a previously used (CA) certificate, you will need to add the hashes of the previous GRUB2 binaries exposed to the CVEs to vendor_dbx in shim in order to prevent GRUB2 from being able to chainload those older GRUB2 binaries. If you are changing to a new (CA) certificate, this does not apply.
 ### Please describe your strategy.
 *******************************************************************************
-[your text here]
+N/A, we are using a new CA certificate.
 
 *******************************************************************************
 ### What OS and toolchain must we use to reproduce this build?  Include where to find it, etc.  We're going to try to reproduce your build as closely as possible to verify that it's really a build of the source tree you tell us it is, so these need to be fairly thorough. At the very least include the specific versions of gcc, binutils, and gnu-efi which were used, and where to find those binaries.
@@ -195,7 +197,11 @@ This should include logs for creating the buildroots, applying patches, doing th
 ### What changes were made in the distor's secure boot chain since your SHIM was last signed?
 For example, signing new kernel's variants, UKI, systemd-boot, new certs, new CA, etc..
 *******************************************************************************
-[your text here]
+- New CA
+- Updated grub2
+- New kernel version
+- Signed systemd-boot
+- Signed UKI
 
 *******************************************************************************
 ### What is the SHA256 hash of your final SHIM binary?
@@ -241,12 +247,15 @@ and only append your own. More information on how SBAT works can be found
 *******************************************************************************
 ### If your SHIM launches any other components, please provide further details on what is launched.
 *******************************************************************************
-[your text here]
+N/A, our shim will only launch either grub2 or systemd-boot
 
 *******************************************************************************
 ### If your GRUB2 or systemd-boot launches any other binaries that are not the Linux kernel in SecureBoot mode, please provide further details on what is launched and how it enforces Secureboot lockdown.
 *******************************************************************************
-[your text here]
+Both grub2 and systemd-boot will potentially launch (all as a UEFI object):
+- Linux kernel
+- Linux UKI
+- Hyper-V launcher
 
 *******************************************************************************
 ### How do the launched components prevent execution of unauthenticated code?
