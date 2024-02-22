@@ -297,6 +297,11 @@ and only append your own. More information on how SBAT works can be found
 [here](https://github.com/rhboot/shim/blob/main/SBAT.md).
 *******************************************************************************
 
+The shim sbat is:
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.mariner,1,Microsoft,shim,15.8-1.cm2,https://github.com/microsoft/CBL-Mariner
+
 The only applicable binary is for grub (we do not provide fwupd, fwupdate, systemd-boot, nor systemd-stub).
 
 Our current grub sbat is:
