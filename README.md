@@ -301,8 +301,8 @@ x64 and aa64.
 ### What is the SHA256 hash of your final shim binary?
 *******************************************************************************
 
-0eff03502514be459b182c3cda1cef6a3762cbf10462591685a17c356e42774d  shimaa64.efi
-b6a99795d9f3e882afa318d11bdb648dff7e547470d14bfeba03af385eb452fc  shimx64.efi
+7905c30de3109eb4ff8a5d198f5077bceb35b0fc3559b03924cf78a96e511bd0  shimaa64.efi
+83c927eada08e0811adbaab47323841808d79e51d11aa8072c552bfbf80af801  shimx64.efi
 
 *******************************************************************************
 ### How do you manage and protect the keys used in your shim?

@@ -1,4 +1,4 @@
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0.20240510
+FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0.20240624
 COPY shim-unsigned-*-15.8-3.azl3.src.rpm shim*.efi /
 
 RUN <<-EOF
@@ -25,15 +25,15 @@ RUN <<-EOF
   tdnf install -y binutils-0:2.41-2.azl3 \
                   dos2unix-0:7.5.1-1.azl3 \
                   efivar-devel-0:39-1.azl3 \
-                  gcc-0:13.2.0-4.azl3 \
+                  gcc-0:13.2.0-6.azl3 \
                   git-0:2.42.0-2.azl3 \
-                  glibc-devel-0:2.38-3.azl3 \
-                  kernel-headers-0:6.6.29.1-3.azl3 \
+                  glibc-devel-0:2.38-5.azl3 \
+                  kernel-headers-0:6.6.29.1-4.azl3 \
                   make-0:4.4.1-1.azl3 \
                   openssl-devel-0:3.3.0-1.azl3 \
                   pesign-0:116-3.azl3 \
                   rpm-build-0:4.18.2-1.azl3 \
-                  vim-extra-0:9.0.2190-2.azl3
+                  vim-extra-0:9.0.2190-3.azl3
 
   rpm -iv /${PKGNAME}-*.src.rpm
   rpmbuild -bb /usr/src/azl/SPECS/${PKGNAME}.spec
