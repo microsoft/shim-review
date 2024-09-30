@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/azurelinux/base/core:3.0.20240824
-COPY shim-unsigned-aa64-15.8-3.azl3.src.rpm shimaa64.efi /
+COPY shim-unsigned-aarch64-15.8-3.azl3.src.rpm shimaa64.efi /
 
 RUN tdnf install -y binutils-0:2.41-2.azl3 \
                   dos2unix-0:7.5.1-1.azl3 \
@@ -14,9 +14,9 @@ RUN tdnf install -y binutils-0:2.41-2.azl3 \
                   rpm-build-0:4.18.2-1.azl3 \
                   vim-extra-0:9.0.2190-3.azl3
 
-RUN rpm -iv /shim-unsigned-aa64-*.src.rpm
-RUN rpmbuild -bb /usr/src/azl/SPECS/shim-unsigned-aa64.spec
-RUN rpm -iv /usr/src/azl/RPMS/aarch64/shim-unsigned-aa64-*.aarch64.rpm
+RUN rpm -iv /shim-unsigned-aarch64-*.src.rpm
+RUN rpmbuild -bb /usr/src/azl/SPECS/shim-unsigned-aarch64.spec
+RUN rpm -iv /usr/src/azl/RPMS/aarch64/shim-unsigned-aarch64-*.aarch64.rpm
 RUN sha256sum /usr/share/shim/15.8/aa64/shimaa64.efi /shimaa64.efi > /shim.sha256
 RUN cmp /usr/share/shim/15.8/aa64/shimaa64.efi /shimaa64.efi
 RUN objcopy -O binary -j .sbat /usr/share/shim/15.8/aa64/shimaa64.efi /shim-sbat
