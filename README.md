@@ -106,8 +106,8 @@ The SRPMs are included in this application:
 https://github.com/microsoft/shim-review/tree/azurelinux
 
 Or the direct source is available here:
-https://github.com/microsoft/azurelinux/tree/ddstreet/shim/SPECS/shim-unsigned-aarch64
-https://github.com/microsoft/azurelinux/tree/ddstreet/shim/SPECS/shim-unsigned-x64
+- https://github.com/microsoft/azurelinux/tree/chrco/shim-15-8/SPECS/shim-unsigned-aarch64
+- https://github.com/microsoft/azurelinux/tree/chrco/shim-15-8/SPECS/shim-unsigned-x64
 
 *******************************************************************************
 ### What patches are being applied and why:
@@ -213,7 +213,7 @@ We mainly adhere to the stable kernel release tree for our kernel
 version (6.6) but also include some additional patches.
 
 Our current kernel tree is here:
-https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.25.1
+https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.51.1
 
 *******************************************************************************
 ### Do you use an ephemeral key for signing kernel modules?
@@ -261,11 +261,12 @@ Dockerfile does not specify the specific versions of all additional
 dependency packages (for the additional packages that are installed
 using tdnf).
 
-To allow using the same Dockerfile for both x86_64 and aarch64, it
-uses a here-document, and so it requires using docker's buildx
-backend; it should be run as:
+For x86_64 architecture, the docker file can be found in the Dockerfile-x86_64 directory.
+For aarch64 architecture, the docker file can be found in the Dockerfile-aarch64 directory.
 
-$ docker buildx build .
+For each, the docker build can be run using:
+
+$ docker build .
 
 *******************************************************************************
 ### Which files in this repo are the logs for your build?
@@ -332,17 +333,20 @@ Hint: run `objcopy --only-section .sbat -O binary YOUR_EFI_BINARY /dev/stdout` t
 
 Yes
 
-\\\
+```
 sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
 shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
 shim.azurelinux,1,Microsoft,shim,15.8,https://github.com/microsoft/azurelinux
-\\\
+shim.rh,3,The Fedora Project,shim,15.8,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,15.8,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,15.8,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+```
 
-\\\
+```
 sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
 grub,4,Free Software Foundation,grub,2.06,https://www.gnu.org/software/grub/
-grub.azurelinux,3,Microsoft,grub2,2.06-19.azl3,https://github.com/microsoft/azurelinux
-\\\
+grub.azurelinux,3,Microsoft,grub2,2.06-20.azl3,https://github.com/microsoft/azurelinux
+```
 
 We do not provide fwupd or fwupdate.
 
@@ -356,19 +360,19 @@ Hint: this is about those modules that are in the binary itself, not the `.mod` 
 *******************************************************************************
 
 For x64:
-\\\
+```
 fat iso9660 part_gpt part_msdos normal boot linux configfile loopback chain efifwsetup efi_gop efi_uga ls search search_label search_fs_uuid search_fs_file gfxterm gfxterm_background gfxterm_menu test all_video loadenv exfat ext2 udf halt gfxmenu png tga lsefi help probe echo lvm cryptodisk luks gcry_rijndael gcry_sha512 tpm efinet tftp multiboot2 xfs
-\\\
+```
 
 For aa64:
-\\\
+```
 fat iso9660 part_gpt part_msdos normal boot linux configfile loopback chain efifwsetup efi_gop ls search search_label search_fs_uuid search_fs_file gfxterm gfxterm_background gfxterm_menu test all_video loadenv exfat ext2 udf halt gfxmenu png tga lsefi help probe echo lvm cryptodisk luks gcry_rijndael gcry_sha512 tpm efinet tftp xfs
-\\\
+```
 
 For ease of review, they are the same except these modules are only included in x64:
-\\\
+```
 efi_uga multiboot2
-\\\
+```
 
 This can be seen at:
 https://github.com/microsoft/azurelinux/blob/377b12be2e670dddf3c948f16e3ddd860f5b094b/SPECS/grub2/grub2.spec#L316
@@ -390,7 +394,7 @@ And numerous patches are added, as seen in the spec file:
 https://github.com/microsoft/azurelinux/blob/3.0/SPECS/grub2/grub2.spec
 
 The current full version number of our latest released grub2 rpm is
-2.06-18.azl3 (though it will be bumped to 2.06-19, or later, along
+2.06-20.azl3 (though it will be bumped to 2.06-21, or later, along
 with this new signed shim).
 
 *******************************************************************************
@@ -430,7 +434,7 @@ Our kernel is based on the 6.6 release and regularly pulls patches
 from the upstream stable branch for 6.6.
 
 Our current kernel tree is here:
-https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.29.1
+https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.51.1
 
 *******************************************************************************
 ### What contributions have you made to help us review the applications of other applicants?
