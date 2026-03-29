@@ -1,0 +1,26 @@
+#TODO: Update base image version and package versions to match releases available at the time of shim-unsigned-* PR merge.
+FROM mcr.microsoft.com/azurelinux/base/core:3.0.20260304
+COPY shim-unsigned-x64-16.1-1.azl3.src.rpm shimx64.efi /
+
+RUN tdnf install -y binutils-0:2.41-10.azl3 \
+                  dos2unix-0:7.5.1-1.azl3 \
+                  efivar-devel-0:39-1.azl3 \
+                  gcc-0:13.2.0-7.azl3 \
+                  git-0:2.45.4-3.azl3 \
+                  glibc-devel-0:2.38-18.azl3 \
+                  kernel-headers-0:6.6.126.1-1.azl3 \
+                  make-0:4.4.1-2.azl3 \
+                  openssl-devel-0:3.3.5-4.azl3 \
+                  pesign-0:116-3.azl3 \
+                  rpm-build-0:4.18.2-1.azl3 \
+                  vim-extra-0:9.2.0088-1.azl3
+
+RUN rpm -iv /shim-unsigned-x64-*.src.rpm
+RUN rpmbuild -bb /usr/src/azl/SPECS/shim-unsigned-x64.spec
+RUN rpm -iv /usr/src/azl/RPMS/x86_64/shim-unsigned-x64-*.x86_64.rpm
+RUN sha256sum /usr/share/shim/16.1/x64/shimx64.efi /shimx64.efi > /shim.sha256
+RUN cmp /usr/share/shim/16.1/x64/shimx64.efi /shimx64.efi
+RUN objcopy -O binary -j .sbat /usr/share/shim/16.1/x64/shimx64.efi /shim-sbat
+
+RUN cat /shim.sha256
+RUN cat /shim-sbat
