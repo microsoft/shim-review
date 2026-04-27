@@ -27,8 +27,7 @@ Here's the template:
 ### What organization or people are asking to have this signed?
 *******************************************************************************
 Organization name and website:  
-Microsoft
-https://www.microsoft.com
+Microsoft - https://www.microsoft.com
 
 *******************************************************************************
 ### What's the legal data that proves the organization's genuineness?
@@ -38,7 +37,7 @@ Provide the information, which can prove the genuineness with certainty.
 Company/tax register entries or equivalent:  
 (a link to the organization entry in your jurisdiction's register will do)  
 
-[https://ccfs.sos.wa.gov](https://ccfs.sos.wa.gov/?_gl=1*ln3ptd*_ga*MTEyNjIwNzkzNC4xNzM2NDQ0MTYx*_ga_7B08VE04WV*czE3NzI1NjY1MTckbzEkZzAkdDE3NzI1NjY1MjIkajU1JGwwJGgw*_ga_X6SDF160YQ*czE3NzI1NjY1MTckbzEkZzAkdDE3NzI1NjY1MjIkajU1JGwwJGgw#/BusinessSearch/BusinessInformation) (search for "Microsoft Corporation" if the link does not go to the specific entry)
+[https://ccfs.sos.wa.gov](https://ccfs.sos.wa.gov) (Search for "Microsoft Corporation" or UBI "600413485" in the "Corporations Search" box.)
 
 * Legal name: Microsoft Corporation
 * Entity type: Profit Corporation
@@ -55,12 +54,12 @@ Issuer: O=MyIssuer, Ltd., CN=MyIssuer EV Code Signing CA
 Subject: C=XX, O=MyCompany, Inc., CN=MyCompany, Inc.
 ```
 
-[your text here]
+
 
 *******************************************************************************
 ### What product or service is this for?
 *******************************************************************************
-Microsoft Azure Linux 4
+Microsoft Azure Linux 3
 
 *******************************************************************************
 ### What's the justification that this really does need to be signed for the whole world to be able to boot it?
@@ -79,10 +78,10 @@ The security contacts need to be verified before the shim can be accepted. For s
 An authorized reviewer will initiate contact verification by sending each security contact a PGP-encrypted email containing random words.
 You will be asked to post the contents of these mails in your `shim-review` issue to prove ownership of the email addresses and PGP keys.
 *******************************************************************************
-- Name: Christopher Co
-- Position: Engineering Lead
-- Email address: chrco@linux.microsoft.com
-- PGP key fingerprint: 1C93 B28D 06DF 5109 C9AE 7DA3 482F A578 5170 7C54
+- Name: Lynsey Rydberg
+- Position: Engineer
+- Email address: lyrydber@linux.microsoft.com
+- PGP key fingerprint: A7B7 B382 79BD 8D12 F8A9 7F64 E648 D0B3 744E 5182
 
 (Key should be signed by the other security contacts, pushed to a keyserver
 like keyserver.ubuntu.com, and preferably have signatures that are reasonably
@@ -91,10 +90,10 @@ well known in the Linux community.)
 *******************************************************************************
 ### Who is the secondary contact for security updates, etc.?
 *******************************************************************************
-- Name: Dan Streetman
-- Position: Engineer
-- Email address: ddstreet@microsoft.com
-- PGP key fingerprint: CF30 0560 12E9 22A2 5BF0 D113 CFA5 4A80 956B AF5D
+- Name: Christopher Co
+- Position: Engineering Lead
+- Email address: chrco@linux.microsoft.com
+- PGP key fingerprint: 1C93 B28D 06DF 5109 C9AE 7DA3 482F A578 5170 7C54
 
 (Key should be signed by the other security contacts, pushed to a keyserver
 like keyserver.ubuntu.com, and preferably have signatures that are reasonably
@@ -234,7 +233,7 @@ Yes.
 Skip this, if you're not using GRUB2, otherwise do you have an entry in your GRUB2 binary similar to:  
 `grub,5,Free Software Foundation,grub,GRUB_UPSTREAM_VERSION,https://www.gnu.org/software/grub/`?
 *******************************************************************************
-Yes
+Yes.
 
 `grub,5,Free Software Foundation,grub,2.06,https://www.gnu.org/software/grub/`
 
@@ -243,7 +242,7 @@ Yes
 ### Does your new chain of trust disallow booting old GRUB2 builds affected by the CVEs?
 If you had no previous signed shim, say so here. Otherwise a simple _yes_ will do.
 *******************************************************************************
-[your text here]
+Yes to both.
 
 *******************************************************************************
 ### If your boot chain of trust includes a Linux kernel:
@@ -259,15 +258,15 @@ Yes, our kernel is based on 6.6 which already includes all 3 commits.
 ### How does your signed kernel enforce lockdown when your system runs with Secure Boot enabled?
 Hint: If it does not, we are not likely to sign your shim.
 *******************************************************************************
-[your text here]
+Our kernel includes patches which introduce `CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT`. This option enforces `lockdown=integrity`. The patches can be seen here: [Merge feature/secure-boot-lockdown/6.6 into v6.6.130 · microsoft/CBL-Mariner-Linux-Kernel@1e19970](https://github.com/microsoft/CBL-Mariner-Linux-Kernel/commit/1e19970faedbcf19a3961576788d660c622cdf89). Our kernel config can be found here: [x86_64](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel/config) and [aarch64](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel/config_aarch64)
 
 *******************************************************************************
 ### Do you build your signed kernel with additional local patches? What do they do?
 *******************************************************************************
-[your text here]
+
 We mainly adhere to the stable kernel release tree for our kernel version (6.6) but also include some additional patches.
 
-https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.126.1
+https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.130.1
 
 *******************************************************************************
 ### Do you use an ephemeral key for signing kernel modules?
@@ -297,13 +296,14 @@ Hint: Prefer using *frozen* packages for your toolchain, since an update to GCC,
 
 If your shim binaries can't be reproduced using the provided Dockerfile, please explain why that's the case, what the differences would be and what build environment (OS and toolchain) is being used to reproduce this build? In this case please write a detailed guide, how to setup this build environment from scratch.
 *******************************************************************************
-[your text here]
+Yes.
 
 *******************************************************************************
 ### Which files in this repo are the logs for your build?
 This should include logs for creating the buildroots, applying patches, doing the build, creating the archives, etc.
 *******************************************************************************
-[your text here]
+* build.aarch64.log
+* build.x86_64.log
 
 *******************************************************************************
 ### What changes were made in the distro's secure boot chain since your SHIM was last signed?
@@ -311,15 +311,16 @@ For example, signing new kernel's variants, UKI, systemd-boot, new certs, new CA
 
 Skip this, if this is your first application for having shim signed.
 *******************************************************************************
-[your text here]
-We have begun signing systemd-boot and packaging a UKI.
+We have begun signing systemd-boot, signing three new kernel variants, and packaging a UKI.
 
 *******************************************************************************
 ### What is the SHA256 hash of your final shim binary?
 *******************************************************************************
 ```
-594fb857a92cf6d84cbf9d90da828fb518aa0196ebacf57da0dcee4013eb12a9  shimaa64.efi                                                                                                     
-d9ab24937c2e5f0601053839b89aa8a9e0c1269da7ba079059f0e7a9c6c9baf5  shimx64.efi  ```
+b45fcb4ed16c5a7de56bdf934a461077156215042554d4cfa524411662661548  shimaa64.efi
+
+d9ab24937c2e5f0601053839b89aa8a9e0c1269da7ba079059f0e7a9c6c9baf5  shimx64.efi
+```
 
 *******************************************************************************
 ### How do you manage and protect the keys used in your shim?
@@ -340,7 +341,7 @@ if _yes_: does that certificate include the X509v3 Basic Constraints
 to say that it is a CA? See the [docs](./docs/) for more guidance
 about this.
 *******************************************************************************
-Yes. It does contain the X509v Basic Constraints stating that it is a CA.
+Yes. It does contain the X509v3 Basic Constraints stating that it is a CA.
 
 *******************************************************************************
 ### Do you add a vendor-specific SBAT entry to the SBAT section in each binary that supports SBAT metadata ( GRUB2, fwupd, fwupdate, systemd-boot, systemd-stub, shim + all child shim binaries )?
@@ -355,12 +356,23 @@ Hint: run `objcopy --dump-section .sbat=/dev/stdout YOUR_EFI_BINARY` to get thes
 *******************************************************************************
 Shim (x64):
 ```
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
 shim.azurelinux,1,Microsoft,shim,16.1,https://github.com/microsoft/azurelinux
 shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
 shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
 shim.fedora,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
 ```
 
+Shim (aarch64):
+```
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.azurelinux,1,Microsoft,shim,16.1,https://github.com/microsoft/azurelinux
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+```
 
 Grub2:
 ```
@@ -383,6 +395,7 @@ sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
 systemd-stub,1,The systemd Developers,systemd,255,https://systemd.io/
 systemd-stub.azurelinux,1,Microsoft Azure Linux,systemd,255-26.azl3,https://aka.ms/azurelinux
 ```
+
 We do not provide fwupd or fwupdate.
 
 *******************************************************************************
@@ -404,33 +417,36 @@ fat iso9660 part_gpt part_msdos normal boot linux configfile loopback chain efif
 *******************************************************************************
 ### If you are using systemd-boot on arm64 or riscv, is the fix for [unverified Devicetree Blob loading](https://github.com/systemd/systemd/security/advisories/GHSA-6m6p-rjcq-334c) included?
 *******************************************************************************
-Yes. We ship [systemd v255](https://github.com/microsoft/azurelinux/blob/25bde1f99877f485a18f9edd996101c0fd393db6/SPECS/systemd/systemd.spec#L48).
+Yes. We ship [systemd v255](https://github.com/microsoft/azurelinux/blob/25bde1f99877f485a18f9edd996101c0fd393db6/SPECS/systemd/systemd.spec#L48) which contains the fix.
 
 *******************************************************************************
 ### What is the origin and full version number of your bootloader (GRUB2 or systemd-boot or other)?
 *******************************************************************************
-[your text here]
+The source is originally from: https://git.savannah.gnu.org/cgit/grub.git/snapshot/grub-2.06.tar.gz
+
+And numerous patches are added, as seen in the spec file: https://github.com/microsoft/azurelinux/blob/3.0/SPECS/grub2/grub2.spec
+
+The current full version number of our latest released grub2 rpm is 2.06-27.azl3.
+
+The SRPM can be obtained from: https://packages.microsoft.com/azurelinux/3.0/prod/base/srpms/Packages/g/grub2-2.06-27.azl3.src.rpm
 
 *******************************************************************************
 ### If your shim launches any other components apart from your bootloader, please provide further details on what is launched.
 Hint: The most common case here will be a firmware updater like fwupd.
 *******************************************************************************
-The shim currently launches only grub (v2.06) and systemd-boot (v255). We do not ship
-fwup.
+The shim currently launches only grub (v2.06) and systemd-boot (v255). We do not ship fwupd.
 
 *******************************************************************************
 ### If your GRUB2 or systemd-boot launches any other binaries that are not the Linux kernel in SecureBoot mode, please provide further details on what is launched and how it enforces Secureboot lockdown.
 Skip this, if you're not using GRUB2 or systemd-boot.
 *******************************************************************************
-Grub2 and systemd-boot only launch the Linux kernel in SecureBoot mode.
+Grub2 and systemd-boot only launch a properly signed Linux kernel in SecureBoot mode.
 
 *******************************************************************************
 ### How do the launched components prevent execution of unauthenticated code?
 Summarize in one or two sentences, how your secure bootchain works on higher level.
 *******************************************************************************
-Grub has secure boot patches which will only load signed binaries. All modules used are built into the signed grub binary.
-
-[your text here] -- TODO: add systemd-boot
+Grub has secure boot patches which will only load signed binaries and all modules used are built into the signed grub binary. Our signed kernels have the necessary lockdown patches. Our systemd-boot uses the common secure boot configuration to ensure it only loads correctly signed binaries.
 
 *******************************************************************************
 ### Does your shim load any loaders that support loading unsigned kernels (e.g. certain GRUB2 configurations)?
@@ -440,7 +456,16 @@ No.
 *******************************************************************************
 ### What kernel are you using? Which patches and configuration does it include to enforce Secure Boot?
 *******************************************************************************
-Our kernel is based on the 6.6 release and regularly pulls patches from the upstream stable branch for 6.6.
+We currently sign three kernels and regularly pull patches for them from their respective upstream branches. We include the standard lockdown patches in each.
+
+| package name | kernel version  | newest release at time of submission | spec file | source |
+|--------------|-----------------|--------------------------------------|-----------|--------|
+| kernel       | 6.6             | 6.6.130.1-3                          | [kernel.spec](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel/kernel.spec)| https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.130.1|
+| kernel-hwe   | 6.12            | 6.12.78.2-1                          | [kernel-hwe.spec](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel-hwe/kernel-hwe.spec)| https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/hwe/6.12.78.2|
+| kernel-64k   | 6.6             | 6.6.130.1-3                          | [kernel-64k.spec](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel-64k/kernel-64k.spec) | https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/mariner-3/6.6.130.1 |
+| kernel-mshv  | 6.6             | 6.6.121.mshv-1                       | [kernel-mshv.spec](https://github.com/microsoft/azurelinux/blob/3.0/SPECS/kernel-mshv/kernel-mshv.spec) | https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/kata/6.6.121.mshv1 |
+
+> Note: kernel-uvm is not signed and is not used for Secure Boot scenarios.
 
 *******************************************************************************
 ### What contributions have you made to help us review the applications of other applicants?
@@ -450,11 +475,18 @@ A reasonable timeframe of waiting for a review can reach 2-3 months. Helping us 
 
 For newcomers, the applications labeled as [*easy to review*](https://github.com/rhboot/shim-review/issues?q=is%3Aopen+is%3Aissue+label%3A%22easy+to+review%22) are recommended to start the contribution process.
 *******************************************************************************
-[your text here]
+Full reviews:
 
-https://github.com/rhboot/shim-review/issues/527
+* #527 rockylinux-9 shim-16.1 - https://github.com/rhboot/shim-review/issues/527
+* #536 debian-13 shim-16.1 - https://github.com/rhboot/shim-review/issues/536
+* #537 debian-12 shim-16.1 - https://github.com/rhboot/shim-review/issues/537
+* #528 lernstick shim-16.1 - https://github.com/rhboot/shim-review/issues/528
+
+Partials/questions raised:
+* #518 pc-doctor shim-16.1 - https://github.com/rhboot/shim-review/issues/518
+* #523 miracleLinux-9 shim-16.1 - https://github.com/rhboot/shim-review/issues/523
 
 *******************************************************************************
 ### Add any additional information you think we may need to validate this shim signing application.
 *******************************************************************************
-[your text here]
+None
