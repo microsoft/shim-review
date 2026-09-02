@@ -27,7 +27,7 @@ Here's the template:
 ### What organization or people are asking to have this signed?
 *******************************************************************************
 Organization name and website:  
-[your text here]
+Microsoft - https://www.microsoft.com
 
 *******************************************************************************
 ### What's the legal data that proves the organization's genuineness?
@@ -37,7 +37,12 @@ Provide the information, which can prove the genuineness with certainty.
 Company/tax register entries or equivalent:  
 (a link to the organization entry in your jurisdiction's register will do)  
 
-[your text here]
+[https://ccfs.sos.wa.gov](https://ccfs.sos.wa.gov) (Search for "Microsoft Corporation" or UBI "600413485" in the "Corporations Search" box.)
+
+* Legal name: Microsoft Corporation
+* Entity type: Profit Corporation
+* Jurisdiction: Washington (US‑WA)
+* Registration / entity ID: 600413485
 
 The public details of both your organization and the issuer in the EV certificate used for signing .cab files at Microsoft Hardware Dev Center File Signing Services.  
 (**not** the CA certificate embedded in your shim binary)
@@ -49,22 +54,25 @@ Issuer: O=MyIssuer, Ltd., CN=MyIssuer EV Code Signing CA
 Subject: C=XX, O=MyCompany, Inc., CN=MyCompany, Inc.
 ```
 
-[your text here]
+```
+Issuer: O="DigiCert, Inc.", C=US, CN=DigiCert Trusted G4 Code Signing RSA4096 SHA384 2021 CA1
+Subject: C=US, S=Washington, L=Redmond, O=Microsoft Corporation, CN=Microsoft Corporation
+```
 
 *******************************************************************************
 ### What product or service is this for?
 *******************************************************************************
-[your text here]
+Microsoft Azure Linux 4
 
 *******************************************************************************
 ### What's the justification that this really does need to be signed for the whole world to be able to boot it?
 *******************************************************************************
-[your text here]
+Our distribution must run under secure boot on the Azure cloud, as well as other hosts including bare metal systems.
 
 *******************************************************************************
 ### Why are you unable to reuse shim from another distro that is already signed?
 *******************************************************************************
-[your text here]
+We are a full distro that maintains and regularly releases updated grub and kernel packages.
 
 *******************************************************************************
 ### Who is the primary contact for security updates, etc.?
@@ -75,20 +83,20 @@ You will be asked to post the contents of these mails in your `shim-review` issu
 Please upload the PGP keys to a well-known keyserver like keyserver.ubuntu.com and/or include them in the review as an .asc file, and point to them here.
 
 *******************************************************************************
-- Name:
-- Position:
-- Email address:
-- PGP key fingerprint:
-- File/keyserver location:
+- Name: Lynsey Rydberg
+- Position: Engineer
+- Email address: lyrydber@linux.microsoft.com
+- PGP key fingerprint: A7B7 B382 79BD 8D12 F8A9 7F64 E648 D0B3 744E 5182
+- File/keyserver location: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xA7B7B38279BD8D12F8A97F64E648D0B3744E5182
 
 *******************************************************************************
 ### Who is the secondary contact for security updates, etc.?
 *******************************************************************************
-- Name:
-- Position:
-- Email address:
-- PGP key fingerprint:
-- File/keyserver location:
+- Name: Christopher Co
+- Position: Engineering Lead
+- Email address: chrco@linux.microsoft.com
+- PGP key fingerprint: 1C93 B28D 06DF 5109 C9AE 7DA3 482F A578 5170 7C54
+- File/keyserver location: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x1C93B28D06DF5109C9AE7DA3482FA57851707C54
 
 *******************************************************************************
 ### Were these binaries created from the 16.1 shim release tar?
@@ -122,7 +130,7 @@ authentic, please confirm this here with a simple *yes*.
 
 A short guide on verifying public keys and signatures should be available in the [docs](./docs/) directory.
 *******************************************************************************
-[your text here]
+Yes.
 
 *******************************************************************************
 ### URL for a repo that contains the exact code which was built to result in your binary:
@@ -130,26 +138,35 @@ Hint: If you attach all the patches and modifications that are being used to you
 
 You can also point to your custom git servers, where the code is hosted.
 *******************************************************************************
-[your url here]
+`https://github.com/microsoft/shim-review/tree/lyrydber/azurelinux4_shim_16.1` 
+
+SRPMs containing all source and build instructions are checked in.
 
 *******************************************************************************
 ### What patches are being applied and why:
 Mention all the external patches and build process modifications, which are used during your building process, that make your shim binary be the exact one that you posted as part of this application.
 *******************************************************************************
-[your text here]
+No patches are being applied to the shim.
 
 *******************************************************************************
 ### Do you have the NX bit set in your shim? If so, is your entire boot stack NX-compatible and what testing have you done to ensure such compatibility?
 
 See https://techcommunity.microsoft.com/t5/hardware-dev-center/nx-exception-for-shim-community/ba-p/3976522 for more details on the signing of shim without NX bit.
 *******************************************************************************
-[your text here]
+Without NX:
+* shimx64.efi
+* shimaa64.efi
+
+With NX:
+* shimx64.nx.efi
+* shimaa64.nx.efi
+
 
 *******************************************************************************
 ### What exact implementation of Secure Boot in GRUB2 do you have? (Either Upstream GRUB2 shim_lock verifier or Downstream RHEL/Fedora/Debian/Canonical-like implementation)
 Skip this, if you're not using GRUB2.
 *******************************************************************************
-[your text here]
+Azure Linux 4 uses the downstream Fedora GRUB2 Secure Boot implementation, including GRUB's `shim_lock_verifier` integration with shim's ShimLock protocol.
 
 *******************************************************************************
 ### Do you have fixes for all the following GRUB2 CVEs applied?
@@ -217,21 +234,23 @@ Skip this, if you're not using GRUB2.
   * CVE-2025-1118
   * CVE-2025-1125
 *******************************************************************************
-[your text here]
+Yes.
 
 *******************************************************************************
 ### If shim is loading GRUB2 bootloader, and if these fixes have been applied, is the upstream global SBAT generation in your GRUB2 binary set to 5?
 Skip this, if you're not using GRUB2, otherwise do you have an entry in your GRUB2 binary similar to:  
 `grub,5,Free Software Foundation,grub,GRUB_UPSTREAM_VERSION,https://www.gnu.org/software/grub/`?
 *******************************************************************************
-[your text here]
+Yes.
+
+`grub,5,Free Software Foundation,grub,2.12,https://www.gnu.org/software/grub/`
 
 *******************************************************************************
 ### Were old shims hashes provided to Microsoft for verification and to be added to future DBX updates?
 ### Does your new chain of trust disallow booting old GRUB2 builds affected by the CVEs?
 If you had no previous signed shim, say so here. Otherwise a simple _yes_ will do.
 *******************************************************************************
-[your text here]
+Yes to both.
 
 *******************************************************************************
 ### If your boot chain of trust includes a Linux kernel:
@@ -241,30 +260,34 @@ If you had no previous signed shim, say so here. Otherwise a simple _yes_ will d
 Hint: upstream kernels should have all these applied, but if you ship your own heavily-modified older kernel version, that is being maintained separately from upstream, this may not be the case.  
 If you are shipping an older kernel, double-check your sources; maybe you do not have all the patches, but ship a configuration, that does not expose the issue(s).
 *******************************************************************************
-[your text here]
+Yes, our kernel is based on 6.18 which already includes all 3 commits.
 
 *******************************************************************************
 ### How does your signed kernel enforce lockdown when your system runs with Secure Boot enabled?
 Hint: If it does not, we are not likely to sign your shim.
 *******************************************************************************
-[your text here]
+Our Azure Linux 4 kernel [source](https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/azl4/6.18.39.1) includes the Secure Boot lockdown series merged in [`Merge feature/secure-boot-lockdown/6.18 into v6.18.39`](https://github.com/microsoft/CBL-Mariner-Linux-Kernel/commit/582852e15f5d15cd279303305cd7a0f5a16eac20). This series detects EFI Secure Boot, sets `EFI_SECURE_BOOT`, and calls `lock_kernel_down("EFI Secure Boot", LOCKDOWN_INTEGRITY_MAX)`.
+
+Both Azure Linux 4 kernel configurations enable `CONFIG_SECURITY_LOCKDOWN_LSM`, `CONFIG_SECURITY_LOCKDOWN_LSM_EARLY`, and `CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT`. Therefore, when the kernel is booted with UEFI Secure Boot enabled, it automatically enters integrity lockdown early in boot. This is functionally equivalent to `lockdown=integrity`, but is triggered by Secure Boot rather than requiring a kernel command-line option.
 
 *******************************************************************************
 ### Do you build your signed kernel with additional local patches? What do they do?
 *******************************************************************************
-[your text here]
+We mainly adhere to the stable kernel release tree for our kernel version (6.18) but also include some additional patches.
+
+https://github.com/microsoft/CBL-Mariner-Linux-Kernel/tree/rolling-lts/azl4/6.18.39.1
 
 *******************************************************************************
 ### Do you use an ephemeral key for signing kernel modules?
 ### If not, please describe how you ensure that one kernel build does not load modules built for another kernel.
 *******************************************************************************
-[your text here]
+Yes.
 
 *******************************************************************************
 ### If you use vendor_db functionality of providing multiple certificates and/or hashes please briefly describe your certificate setup.
 ### If there are allow-listed hashes please provide exact binaries for which hashes are created via file sharing service, available in public with anonymous access for verification.
 *******************************************************************************
-[your text here]
+We do not use vendor_db functionality, nor do we include any allow-listed hashes. We include only a single cert, azurelinux-ca-20230216.der.
 
 *******************************************************************************
 ### If you are re-using the CA certificate from your last shim binary, you will need to add the hashes of the previous GRUB2 binaries exposed to the CVEs mentioned earlier to vendor_dbx in shim. Please describe your strategy.
@@ -272,7 +295,7 @@ This ensures that your new shim+GRUB2 can no longer chainload those older GRUB2 
 
 If this is your first application or you're using a new CA certificate, please say so here.
 *******************************************************************************
-[your text here]
+While we are re-using our previous certificate, since all our previous grub binaries (that were vulnerable to the CVEs above) were set to sbat level 'grub,4' (or lower) and our new shim requires sbat level 'grub,5', none of our previous grub binaries are loadable by the new shim (and since our grub uses shim lock for verification, are not chain-loadable by our grub either) and therefore none of their hashes need to be included in the vendor_dbx.
 
 *******************************************************************************
 ### Is the Dockerfile in your repository the recipe for reproducing the building of your shim binary?
@@ -282,13 +305,14 @@ Hint: Prefer using *frozen* packages for your toolchain, since an update to GCC,
 
 If your shim binaries can't be reproduced using the provided Dockerfile, please explain why that's the case, what the differences would be and what build environment (OS and toolchain) is being used to reproduce this build? In this case please write a detailed guide, how to setup this build environment from scratch.
 *******************************************************************************
-[your text here]
+Yes.
 
 *******************************************************************************
 ### Which files in this repo are the logs for your build?
 This should include logs for creating the buildroots, applying patches, doing the build, creating the archives, etc.
 *******************************************************************************
-[your text here]
+* build.x86_64.log
+* build.aarch64.log
 
 *******************************************************************************
 ### What changes were made in the distro's secure boot chain since your SHIM was last signed?
@@ -296,24 +320,37 @@ For example, signing new kernel's variants, UKI, systemd-boot, new certs, new CA
 
 Skip this, if this is your first application for having shim signed.
 *******************************************************************************
-[your text here]
+
+Our previous shim review is here:
+https://github.com/rhboot/shim-review/issues/543
+
+Since this is a shim review request for a new distro release, there
+are some differences between this and the Azure Linux 3 release. We have
+reduced the number of kernel variants from 4 to (currently) 1. We have updated 
+our grub, kernel, systemd and fwupd-efi versions. CAs/certs remain the same 
+between releases.
 
 *******************************************************************************
 ### What is the SHA256 hash of your final shim binary?
 *******************************************************************************
-[your text here]
+```
+54cfe3e458c3796276487636fa2b06b43f8938ddafceecd6f905a392225821d2  shimaa64.efi
+f6c7f316a8c7f4c978e92ce9724b45e53cd735386413379bb190a3607249a48b  shimaa64.nx.efi
+b541ee2a79ad69d2a8b9d24b3f4e6f7829198c2ab5ce7a3a0d97a4f008a350fc  shimx64.efi
+f738b88823a0da64bb8eff56825c7c6fd71caf1733ea47a09764098d4b2e7a02  shimx64.nx.efi
+```
 
 *******************************************************************************
 ### How do you manage and protect the keys used in your shim?
 Describe the security strategy that is used for key protection. This can range from using hardware tokens like HSMs or Smartcards, air-gapped vaults, physical safes to other good practices.
 *******************************************************************************
-[your text here]
+We use a hardware security module.
 
 *******************************************************************************
 ### Do you use EV certificates as embedded certificates in the shim?
 A _yes_ or _no_ will do. There's no penalty for the latter.
 *******************************************************************************
-[your text here]
+No.
 
 *******************************************************************************
 ### Are you embedding a CA certificate in your shim?
@@ -322,7 +359,7 @@ if _yes_: does that certificate include the X509v3 Basic Constraints
 to say that it is a CA? See the [docs](./docs/) for more guidance
 about this.
 *******************************************************************************
-[your text here]
+Yes. It does contain the X509v3 Basic Constraints stating that it is a CA.
 
 *******************************************************************************
 ### Do you add a vendor-specific SBAT entry to the SBAT section in each binary that supports SBAT metadata ( GRUB2, fwupd, fwupdate, systemd-boot, systemd-stub, shim + all child shim binaries )?
@@ -335,7 +372,166 @@ If you are using a downstream implementation of GRUB2 (e.g. from Fedora or Debia
 
 Hint: run `objcopy --dump-section .sbat=/dev/stdout YOUR_EFI_BINARY` to get these entries. Paste them here. Preferably surround each listing with three backticks (\`\`\`), so they render well.
 *******************************************************************************
-[your text here]
+
+**x64 binaries**
+```
+objcopy --dump-section .sbat=/dev/stdout fwupdx64.efi
+sbat,1,UEFI shim,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+fwupd-efi,1,Firmware update daemon,fwupd-efi,1.8,https://github.com/fwupd/fwupd-efi
+fwupd-efi.fedora,1,The Fedora Project,fwupd-efi,1.8-1.fc43,https://src.fedoraproject.org/rpms/fwupd-efi
+fwupd-efi.azurelinux,1,Microsoft,fwupd-efi,1.8-5.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fwupdx64.efi.signed
+sbat,1,UEFI shim,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+fwupd-efi,1,Firmware update daemon,fwupd-efi,1.8,https://github.com/fwupd/fwupd-efi
+fwupd-efi.fedora,1,The Fedora Project,fwupd-efi,1.8-1.fc43,https://src.fedoraproject.org/rpms/fwupd-efi
+fwupd-efi.azurelinux,1,Microsoft,fwupd-efi,1.8-5.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout grubx64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+grub,5,Free Software Foundation,grub,2.12,https://www.gnu.org/software/grub/
+grub.rh,2,Red Hat,grub2,2.12-40.fc43,mailto:secalert@redhat.com
+grub.azurelinux,3,Microsoft,grub2,2.12-48.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout vmlinuz-virt.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+systemd-stub,1,The systemd Developers,systemd,258,https://systemd.io/
+systemd-stub.azurelinux,1,Azure Linux,systemd,258.4-7.azl4,https://github.com/microsoft/azurelinux/issues
+kernel-uki-virt.azurelinux,1,Microsoft,kernel-uki-virt,6.18.39-1.5.azl4.x86_64,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fbx64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fbx64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout mmx64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout mmx64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout shimx64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout shimx64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-x64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout systemd-bootx64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+systemd-boot,1,The systemd Developers,systemd,258,https://systemd.io/
+systemd-boot.azurelinux,1,Azure Linux,systemd,258.4-7.azl4,https://github.com/microsoft/azurelinux/issues
+```
+
+**aa64 binaries**
+```
+objcopy --dump-section .sbat=/dev/stdout fwupdaa64.efi
+sbat,1,UEFI shim,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+fwupd-efi,1,Firmware update daemon,fwupd-efi,1.8,https://github.com/fwupd/fwupd-efi
+fwupd-efi.fedora,1,The Fedora Project,fwupd-efi,1.8-1.fc43,https://src.fedoraproject.org/rpms/fwupd-efi
+fwupd-efi.azurelinux,1,Microsoft,fwupd-efi,1.8-5.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fwupdaa64.efi.signed
+sbat,1,UEFI shim,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+fwupd-efi,1,Firmware update daemon,fwupd-efi,1.8,https://github.com/fwupd/fwupd-efi
+fwupd-efi.fedora,1,The Fedora Project,fwupd-efi,1.8-1.fc43,https://src.fedoraproject.org/rpms/fwupd-efi
+fwupd-efi.azurelinux,1,Microsoft,fwupd-efi,1.8-5.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout grubaa64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+grub,5,Free Software Foundation,grub,2.12,https://www.gnu.org/software/grub/
+grub.rh,2,Red Hat,grub2,2.12-40.fc43,mailto:secalert@redhat.com
+grub.azurelinux,3,Microsoft,grub2,2.12-48.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout vmlinuz-virt.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+systemd-stub,1,The systemd Developers,systemd,258,https://systemd.io/
+systemd-stub.azurelinux,1,Azure Linux,systemd,258.4-7.azl4,https://github.com/microsoft/azurelinux/issues
+kernel-uki-virt.azurelinux,1,Microsoft,kernel-uki-virt,6.18.39-1.5.azl4.aarch64,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fbaa64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout fbaa64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout mmaa64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout mmaa64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout shimaa64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout shimaa64.nx.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+shim,4,UEFI shim,shim,1,https://github.com/rhboot/shim
+shim.rh,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.redhat,3,The Fedora Project,shim,16.1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.fedora,3,The Fedora Project,shim,16.1-1,https://src.fedoraproject.org/rpms/shim-unsigned-aarch64
+shim.azurelinux,1,Microsoft,shim,16.1-2.azl4,https://github.com/microsoft/azurelinux/issues
+
+objcopy --dump-section .sbat=/dev/stdout systemd-bootaa64.efi
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+systemd-boot,1,The systemd Developers,systemd,258,https://systemd.io/
+systemd-boot.azurelinux,1,Azure Linux,systemd,258.4-7.azl4,https://github.com/microsoft/azurelinux/issues
+```
 
 *******************************************************************************
 ### If shim is loading GRUB2 bootloader, which modules are built into your signed GRUB2 image?
@@ -343,45 +539,65 @@ Skip this, if you're not using GRUB2.
 
 Hint: this is about those modules that are in the binary itself, not the `.mod` files in your filesystem.
 *******************************************************************************
-[your text here]
 
+x64
+```
+all_video boot blscfg btrfs cat configfile cryptodisk echo ext2 f2fs fat font gcry_rijndael gcry_rsa gcry_serpent gcry_sha256 gcry_twofish gcry_whirlpool gfxmenu gfxterm gzio halt hfsplus http increment iso9660 jpeg loadenv loopback linux lvm luks luks2 memdisk mdraid09 mdraid1x minicmd net normal part_apple part_msdos part_gpt password_pbkdf2 pgp png reboot regexp search search_fs_uuid search_fs_file search_label serial sleep squash4 syslinuxcfg test tftp version video xfs zstd efi_netfs efifwsetup efinet lsefi lsefimmap connectefi bli backtrace chain tpm usb usbserial_common usbserial_pl2303 usbserial_ftdi usbserial_usbdebug keylayouts at_keyboard
+```
+
+aa64
+```
+all_video boot blscfg btrfs cat configfile cryptodisk echo ext2 f2fs fat font gcry_rijndael gcry_rsa gcry_serpent gcry_sha256 gcry_twofish gcry_whirlpool gfxmenu gfxterm gzio halt hfsplus http increment iso9660 jpeg loadenv loopback linux lvm luks luks2 memdisk mdraid09 mdraid1x minicmd net normal part_apple part_msdos part_gpt password_pbkdf2 pgp png reboot regexp search search_fs_uuid search_fs_file search_label serial sleep squash4 syslinuxcfg test tftp version video xfs zstd efi_netfs efifwsetup efinet lsefi lsefimmap connectefi bli
+```
 *******************************************************************************
 ### If you are using systemd-boot on arm64 or riscv, is the fix for [unverified Devicetree Blob loading](https://github.com/systemd/systemd/security/advisories/GHSA-6m6p-rjcq-334c) included?
 *******************************************************************************
-[your text here]
+Yes. We ship [systemd v258.4](https://github.com/microsoft/azurelinux/blob/b181310a375a08f309c5a25aa6bb26b66d0aec6a/specs/s/systemd/systemd.spec#L84) which contains the fix.
 
 *******************************************************************************
 ### What is the origin and full version number of your bootloader (GRUB2 or systemd-boot or other)?
 *******************************************************************************
-[your text here]
+**grub2**
+The source is originally from: https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz
+
+And numerous patches are added, as seen in the spec file: https://github.com/microsoft/azurelinux/blob/4.0/specs/g/grub2/grub2.spec
+
+The latest version of our grub2 package is `2.12-48.azl4` as of 31 Aug. 2026.
+
+**systemd-boot**
+The source is originally from: https://github.com/systemd/systemd/archive/v258.4/systemd-258.4.tar.gz
+
+Patches applied can be found at: https://github.com/microsoft/azurelinux/blob/4.0/specs/s/systemd/systemd.spec
+
+The latest version of our systemd package is `258.4-7.azl4`. Please note we are not signing systemd-boot yet, but will be in short order, which will result in a release number bump to `-8` or higher.
 
 *******************************************************************************
 ### If your shim launches any other components apart from your bootloader, please provide further details on what is launched.
 Hint: The most common case here will be a firmware updater like fwupd.
 *******************************************************************************
-[your text here]
+The shim will launch fwupd-efi (v1.8).
 
 *******************************************************************************
 ### If your GRUB2 or systemd-boot launches any other binaries that are not the Linux kernel in SecureBoot mode, please provide further details on what is launched and how it enforces Secureboot lockdown.
 Skip this, if you're not using GRUB2 or systemd-boot.
 *******************************************************************************
-[your text here]
+Grub2 and systemd-boot only launch a properly signed Linux kernel, UKI, mm<arch>.efi or fb<arch>.efi in SecureBoot mode.
 
 *******************************************************************************
 ### How do the launched components prevent execution of unauthenticated code?
 Summarize in one or two sentences, how your secure bootchain works on higher level.
 *******************************************************************************
-[your text here]
+Grub has secure boot patches which will only load signed binaries and all modules used are built into the signed grub binary. Our signed kernels have the necessary lockdown patches. Our systemd-boot uses the common secure boot configuration to ensure it only loads correctly signed binaries.
 
 *******************************************************************************
 ### Does your shim load any loaders that support loading unsigned kernels (e.g. certain GRUB2 configurations)?
 *******************************************************************************
-[your text here]
+No.
 
 *******************************************************************************
 ### What kernel are you using? Which patches and configuration does it include to enforce Secure Boot?
 *******************************************************************************
-[your text here]
+Our kernel is based on the 6.18 release and regularly pulls patches from the upstream stable branch for 6.18. We include the standard lockdown patches.
 
 *******************************************************************************
 ### What contributions have you made to help us review the applications of other applicants?
@@ -391,9 +607,9 @@ A reasonable timeframe of waiting for a review can reach 2-3 months. Helping us 
 
 For newcomers, the applications labeled as [*easy to review*](https://github.com/rhboot/shim-review/issues?q=is%3Aopen+is%3Aissue+label%3A%22easy+to+review%22) are recommended to start the contribution process.
 *******************************************************************************
-[your text here]
+ corvus-callidus completed 13 shim-signing application reviews thus far in 2026. Recent examples include AlmaLinux 9 ( rhboot/shim-review#560 ), Fedora 16.1 for aarch64 ( rhboot/shim-review#557 ), and Fedora 16.1 for x64 ( rhboot/shim-review#556 ).
 
 *******************************************************************************
 ### Add any additional information you think we may need to validate this shim signing application.
 *******************************************************************************
-[your text here]
+None.

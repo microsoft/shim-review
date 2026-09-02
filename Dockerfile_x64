@@ -1,0 +1,33 @@
+FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0
+
+COPY shim-unsigned-x64-16.1-2.azl4.src.rpm shimx64.efi shimx64.nx.efi /
+
+RUN dnf install -y \
+        binutils-2.45.1-5.azl4 \
+        dos2unix-7.5.3-2.azl4 \
+        elfutils-libelf-devel-0.194-4.azl4 \
+        findutils-4.10.0-7.azl4 \
+        gcc-15.2.1-7.azl4 \
+        git-2.53.0-2.azl4 \
+        make-4.4.1-12.azl4 \
+        openssl-3.5.4-7.azl4 \
+        openssl-devel-3.5.4-7.azl4 \
+        pesign-116-9.azl4 \
+        rpm-build-6.0.1-1.azl4 \
+    && dnf clean all
+
+RUN rpm -iv /shim-unsigned-x64-16.1-2.azl4.src.rpm
+RUN rpmbuild -bb /root/rpmbuild/SPECS/shim-unsigned-x64.spec 2>&1 | tee /build.x86_64.log
+RUN rpm -iv /root/rpmbuild/RPMS/x86_64/shim-unsigned-x64-*.x86_64.rpm
+
+RUN sha256sum /usr/share/shim/16.1-2.azl4/x64/shimx64.efi /shimx64.efi > /shim.sha256
+RUN sha256sum /usr/share/shim/16.1-2.azl4/x64/shimx64.nx.efi /shimx64.nx.efi > /shim.nx.sha256
+
+RUN cmp /usr/share/shim/16.1-2.azl4/x64/shimx64.efi /shimx64.efi
+RUN cmp /usr/share/shim/16.1-2.azl4/x64/shimx64.nx.efi /shimx64.nx.efi
+
+RUN objcopy -O binary -j .sbat /usr/share/shim/16.1-2.azl4/x64/shimx64.efi /shim-sbat
+
+RUN cat /shim.sha256
+RUN cat /shim.nx.sha256
+RUN cat /shim-sbat
